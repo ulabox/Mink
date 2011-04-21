@@ -108,6 +108,18 @@ class DocumentElement extends ActionableElement
     }
 
     /**
+     * Finds element by xpath query.
+     *
+     * @param   string  $locator     element query
+     *
+     * @return  Behat\Mink\Element\NodeElement|null
+     */
+    public function findByXpath($locator)
+    {
+        return $this->find('xpath', $locator);
+    }
+
+    /**
      * Checks whether document has a field (input, textarea, select) with specified locator.
      *
      * @param   string  $locator    input id, name or label

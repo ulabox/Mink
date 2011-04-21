@@ -65,6 +65,26 @@ abstract class ActionableElement extends Element
     }
 
     /**
+     * Clicks link with specified xpath.
+     *
+     * @param   string  $xpath    xpath
+     */
+    public function clickLinkByContent($content)
+    {
+        $this->getSession()->getDriver()->click("//a[contains(.,'".$content."')]");
+    }
+
+    /**
+     * Clicks link with specified xpath.
+     *
+     * @param   string  $xpath    xpath
+     */
+    public function clickLinkByXpath($xpath)
+    {
+        $this->getSession()->getDriver()->click($xpath);
+    }
+
+    /**
      * Clicks button (input[type=submit|image|button], button) with specified locator.
      *
      * @param   string  $locator    button id, value or alt
@@ -101,6 +121,16 @@ abstract class ActionableElement extends Element
     }
 
     /**
+     * Fills in field (input, textarea, select) with specified xpath.
+     *
+     * @param   string  $xpath    Xpath expression
+     */
+    public function fillFieldByXpath($xpath, $value)
+    {
+        $this->getSession()->getDriver()->setValue($xpath, $value);
+    }
+
+    /**
      * Checks checkbox with specified locator.
      *
      * @param   string  $locator    input id, name or label
@@ -119,6 +149,16 @@ abstract class ActionableElement extends Element
     }
 
     /**
+     * Checks checkbox with specified xpath.
+     *
+     * @param   string  $xpath    Xpath expression
+     */
+    public function checkFieldByXpath($xpath)
+    {
+        $this->getSession()->getDriver()->check($xpath);
+    }
+
+    /**
      * Unchecks checkbox with specified locator.
      *
      * @param   string  $locator    input id, name or label
@@ -134,6 +174,16 @@ abstract class ActionableElement extends Element
         }
 
         $this->getSession()->getDriver()->uncheck($field->getXpath());
+    }
+
+    /**
+     * Unchecks checkbox with specified xpath.
+     *
+     * @param   string  $xpath    Xpath expression
+     */
+    public function uncheckFieldByXpath($xpath)
+    {
+        $this->getSession()->getDriver()->uncheck($xpath);
     }
 
     /**

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Behat\Mink.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
@@ -24,4 +23,5 @@ $loader->registerNamespaces(array(
 ));
 $loader->register();
 
-require_once __DIR__ . '/vendor/Goutte/goutte.phar';
+require_once('Goutte/autoload.php');
+
