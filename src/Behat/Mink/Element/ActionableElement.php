@@ -221,4 +221,37 @@ abstract class ActionableElement extends Element
 
         $this->getSession()->getDriver()->attachFile($field->getXpath(), $path);
     }
+
+    /**
+     * Get attribute from element given as xpath
+     *
+     * @param   string  $xpath    xpath selector
+     * @param   string  $attr    attribute to return
+     *
+     * @throws  Behat\Mink\Exception\ElementNotFoundException
+     */
+    public function getAttrByXpath($xpath, $attr)
+    {
+        $field = $this->findByXpath($xpath);
+        if (null === $field) {
+            throw new ElementNotFoundException('field', $field);
+        }
+        return $this->getSession()->getDriver()->getAttribute($xpath, $attr);
+    }
+
+    /**
+     * Get text from element given as xpath
+     *
+     * @param   string  $xpath    xpath selector
+     *
+     * @throws  Behat\Mink\Exception\ElementNotFoundException
+     */
+    public function getTextByXpath($xpath)
+    {
+        $field = $this->findByXpath($xpath);
+        if (null === $field) {
+            throw new ElementNotFoundException('field', $field);
+        }
+        return $this->getSession()->getDriver()->getText($xpath);
+    }
 }

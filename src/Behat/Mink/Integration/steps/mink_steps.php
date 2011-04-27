@@ -34,6 +34,10 @@ $steps->When('/^(?:|I )follow "(?P<link>[^"]*)"$/', function($world, $link) {
 $steps->When('/^(?:|I )follow by xpath <(?P<xpath>[^>]*)>$/', function($world, $xpath) {
     $world->getSession()->getPage()->clickLinkByXpath($xpath);
 });
+$steps->When('/^(?:|I )follow by xpath "(?P<xpath>[^>]*)", force same page$/', function($world, $xpath)use($steps) {
+    $link = $world->getSession()->getPage()->getAttrByXpath($xpath,'href');
+    $steps->Given('I am on '.$link,$world);
+});
 
 $steps->When('/^(?:|I )follow by xpath "(?P<xpath>[^"]*)"$/', function($world, $xpath) {
     $world->getSession()->getPage()->clickLinkByXpath($xpath);
@@ -80,11 +84,15 @@ $steps->When('/^(?:|I )check by xpath <(?P<xpath>[^>]*)>$/', function($world, $x
     $world->getSession()->getPage()->checkFieldByXpath($xpath);
 });
 
-$steps->When('/^(?:|I )uncheck by xpath<(?P<option>[^>]*)>$/', function($world, $xpath) {
+$steps->When('/^(?:|I )uncheck by xpath <(?P<xpath>[^>]*)>$/', function($world, $xpath) {
     $world->getSession()->getPage()->uncheckFieldByXpath($xpath);
 });
 
-
+//Get values
+$steps->When('/^(?:|I )get text by xpath <(?P<xpath>[^>]*)>$/', function($world, $xpath) {
+    $text = $world->getSession()->getPage()->getTextByXpath($xpath);
+    $world->tmp['discount']=$text;
+});
 
 
 
