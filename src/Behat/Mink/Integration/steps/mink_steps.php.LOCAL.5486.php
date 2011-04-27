@@ -114,7 +114,7 @@ $steps->Then('/^(?:|I )should see "(?P<text>[^"]*+)"$/', function($world, $text)
 });
 
 $steps->Then('/^(?:|I )should not see "(?P<text>[^"]*+)"$/', function($world, $text) {
-    assertNotRegExp('~(?!'.preg_quote($text).')~',html_entity_decode($world->getSession()->getPage()->getContent(),ENT_QUOTES,'utf-8'));
+    assertRegExp('~(?!'.preg_quote($text).')~',html_entity_decode($world->getSession()->getPage()->getContent(),ENT_QUOTES,'utf-8'));
 });
 
 $steps->Then('/^(?:|I )should see <(?P<text>[^>]*+)> inside xpath <(?P<xpath>[^>]*)>$/', function($world, $text, $xpath) {
@@ -179,58 +179,4 @@ $steps->Then('/^(?:|I )should be on (?P<page>.+)$/', function($world, $page) {
 $steps->Then('/^I wait (?P<seconds>\d) second[s]?$/',function($world,$seconds){
     tlog('Waitting 1 second...');
     $world->getSession()->wait($seconds,"false");
-});
-
-$steps->Then('/^the "(?P<element>[^"]*)" element should contain "(?P<value>[^"]*)"$/', function($world, $element, $value) {
-    $node = $world->getSession()->getPage()->find('xpath', $element);
-
-    if (null === $node) {
-        throw new ElementNotFoundException('element', $element);
-    }
-
-    assertContains($value, preg_replace('/\s+/', ' ', str_replace("\n", '', $node->getText())));
-});
-
-$steps->Then('/^(?:|I )should see "(?P<element>[^"]*)" element$/', function($world, $element) {
-    $node = $world->getSession()->getPage()->find('xpath', $element);
-
-    if (null === $node) {
-        throw new ElementNotFoundException('element', $element);
-    }
-
-    assertNotNull($node);
-});
-
-$steps->Then('/^(?:|I )should not see "(?P<element>[^"]*)" element$/', function($world, $element) {
-    assertNull($world->getSession()->getPage()->find('xpath', $element));
-});
-
-$steps->Then('/^the "(?P<element>[^"]*)" element should link to (?P<href>.*)$/', function($world, $element, $href) {
-    $node = $world->getSession()->getPage()->find('xpath', $element);
-
-    if (null === $node) {
-        throw new ElementNotFoundException('element', $element);
-    }
-
-    $href_parts = parse_url($href);
-    $href = array_merge(
-        parse_url($world->getParameter('start_url')),
-        $href_parts
-    );
-
-    assertSame($href['scheme'].'://'.$href['host'].$href['path'], $node->getAttribute('href'));
-});
-
-$steps->Then('/^the "(?P<element>[^"]*)" element should have a "(?P<attribute>[a-zA-Z\-\_]*)" attribute of "(?P<value>[^"]*)"$/', function($world, $element, $attribute, $value) {
-    $node = $world->getSession()->getPage()->find('xpath', $element);
-
-    if (null === $node) {
-        throw new ElementNotFoundException('element', $element);
-    }
-
-    assertSame($value, $node->getAttribute($attribute));
-});
-
-$steps->Then('/the response status code should be (?P<code>\d+)/', function($world, $code) {
-    assertSame($world->getSession()->getStatusCode(), (int) $code);
 });

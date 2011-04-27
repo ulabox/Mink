@@ -114,13 +114,17 @@ $steps->Then('/^(?:|I )should see "(?P<text>[^"]*+)"$/', function($world, $text)
 });
 
 $steps->Then('/^(?:|I )should not see "(?P<text>[^"]*+)"$/', function($world, $text) {
-    assertNotRegExp('~(?!'.preg_quote($text).')~',html_entity_decode($world->getSession()->getPage()->getContent(),ENT_QUOTES,'utf-8'));
+<<<<<<< HEAD
+    assertRegExp('~(?!'.preg_quote($text).')~',html_entity_decode($world->getSession()->getPage()->getContent(),ENT_QUOTES,'utf-8'));
 });
 
 $steps->Then('/^(?:|I )should see <(?P<text>[^>]*+)> inside xpath <(?P<xpath>[^>]*)>$/', function($world, $text, $xpath) {
     $node = $world->getSession()->getPage()->findByXpath($xpath);
     tlog('I see '.$text.' on my screen.');
     assertRegExp('~'.preg_quote($text).'~',html_entity_decode($node->getText(),ENT_QUOTES,'utf-8'));
+=======
+    assertNotRegExp('/'.preg_quote($text).'/', $world->getSession()->getPage()->getContent());
+>>>>>>> b8bbbcf42b48c51e9aede1374f60563347fc9c08
 });
 
 $steps->Then('/^(?:|I )should not see <(?P<text>[^>]*+)> inside xpath <(?P<xpath>[^>]*)>$/', function($world, $text, $xpath) {
@@ -176,11 +180,11 @@ $steps->Then('/^(?:|I )should be on (?P<page>.+)$/', function($world, $page) {
     );
 });
 
+<<<<<<< HEAD
 $steps->Then('/^I wait (?P<seconds>\d) second[s]?$/',function($world,$seconds){
     tlog('Waitting 1 second...');
     $world->getSession()->wait($seconds,"false");
-});
-
+=======
 $steps->Then('/^the "(?P<element>[^"]*)" element should contain "(?P<value>[^"]*)"$/', function($world, $element, $value) {
     $node = $world->getSession()->getPage()->find('xpath', $element);
 
@@ -233,4 +237,5 @@ $steps->Then('/^the "(?P<element>[^"]*)" element should have a "(?P<attribute>[a
 
 $steps->Then('/the response status code should be (?P<code>\d+)/', function($world, $code) {
     assertSame($world->getSession()->getStatusCode(), (int) $code);
+>>>>>>> b8bbbcf42b48c51e9aede1374f60563347fc9c08
 });
